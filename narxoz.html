@@ -1,36 +1,22 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Khan Detailing</title>
-    <meta name="description" content="Sample car dealership website." />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Khan Carshop — fixed layout</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root{
-            --bg: #0f172a;
-            --panel: #0b1224;
-            --text: #e5e7eb;
-            --muted: #94a3b8;
-            --brand: #60a5fa;
-            --brand-2:#22d3ee;
-            --accent:#a78bfa;
-            --card:#111827;
-            --border:#1f2937;
-            --shadow: 0 8px 30px rgba(0,0,0,.35);
-            --radius: 16px;
-            --radius-lg: 24px;
-            --space: clamp(14px, 2vw, 20px);
-            --maxw: 1100px;
+            --bg:#0f172a; --panel:#0b1224; --text:#e5e7eb; --muted:#94a3b8;
+            --brand:#60a5fa; --brand2:#22d3ee; --border:#1f2937;
+            --maxw:1100px; --space:clamp(14px,2vw,20px);
+            --radius:16px; --shadow:0 8px 30px rgba(0,0,0,.35);
         }
 
-        *{box-sizing:border-box}
+        *{box-sizing:border-box;margin:0;padding:0}
         html,body{height:100%}
         body{
-            margin:0;
-            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+            font-family:Inter,system-ui,sans-serif;
             color:var(--text);
             background:
                     radial-gradient(1200px 600px at 80% -10%, rgba(96,165,250,.15), transparent 60%),
@@ -38,344 +24,280 @@
                     var(--bg);
             line-height:1.6;
             -webkit-font-smoothing:antialiased;
-            -moz-osx-font-smoothing:grayscale;
+            overflow-x: hidden;
         }
 
-        .container{max-width:var(--maxw); margin-inline:auto; padding-inline: var(--space)}
+        .container{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--space);}
+
         header{
-            position:sticky; top:0; z-index:10;
-            backdrop-filter: saturate(1.2) blur(8px);
-            background: linear-gradient(180deg, rgba(10,12,24,.75), rgba(10,12,24,.55));
-            border-bottom: 1px solid var(--border);
+            position:sticky;top:0;z-index:100;
+            backdrop-filter:saturate(1.2) blur(8px);
+            background:linear-gradient(180deg,rgba(10,12,24,.8),rgba(10,12,24,.6));
+            border-bottom:1px solid var(--border);
+        }
+        nav{display:flex;justify-content:space-between;align-items:center;padding:12px 0}
+        .brand{
+            display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:700;
+        }
+        .brand::before{content:"";width:36px;aspect-ratio:1;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand2));box-shadow:var(--shadow)}
+        nav ul{list-style:none;display:flex;gap:1rem}
+        nav li a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px}
+        nav li a:hover{color:var(--text);background:rgba(96,165,250,.12)}
+
+        .burger{display:none;flex-direction:column;gap:4px;cursor:pointer}
+        .burger span{width:26px;height:3px;background:var(--text);border-radius:2px}
+        @media(max-width:768px){
+            nav ul{
+                position:absolute;top:62px;right:var(--space);
+                background:var(--panel);
+                flex-direction:column;
+                width:calc(100vw - (var(--space) * 2) - 40px);
+                padding:10px;
+                border:1px solid var(--border);
+                border-radius:var(--radius);
+                display:none;
+            }
+            nav ul.open{display:flex;}
+            .burger{display:flex}
         }
 
-        .nav{display:flex; align-items:center; justify-content:space-between; padding:12px var(--space)}
-        .brand{display:flex; gap:10px; align-items:center; text-decoration:none; color:var(--text)}
-        .logo{width:36px; aspect-ratio:1; border-radius:10px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); box-shadow: var(--shadow)}
-        .brand-name{font-weight:700; letter-spacing:.3px}
-        nav a{color:var(--muted); text-decoration:none; padding:8px 12px; border-radius:10px}
-        nav a:hover, nav a:focus{color:var(--text); background:rgba(96,165,250,.12)}
+        section{padding:60px 0;border-bottom:1px solid var(--border)}
+        section h2{font-size:clamp(24px,3vw,34px);margin-bottom:8px}
+        .lead{color:var(--muted);margin-bottom:20px}
 
-        .hero{padding: clamp(40px, 8vw, 96px) 0}
-        .hero-wrap{
-            display:grid;
-            gap:28px;
-            grid-template-columns: 1.1fr .9fr;
-            align-items:center;
-        }
-        .hero-wrap > * { min-width: 0; }
+        .hero{display:grid;gap:28px;grid-template-columns:1fr}
+        @media(min-width:860px){ .hero{grid-template-columns:1fr 1fr;align-items:center} }
+        .hero img{width:100%;border-radius:var(--radius);box-shadow:var(--shadow);object-fit:cover}
+        .hero-actions a{display:inline-block;margin-right:10px;padding:12px 18px;font-weight:700;text-decoration:none;border-radius:14px}
+        .hero-actions a.primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#0b1020}
+        .hero-actions a.ghost{border:1px solid var(--border);color:var(--text)}
 
-        .hero h1{font-size:clamp(28px, 4.2vw, 52px); line-height:1.1; margin:0 0 12px; word-break:break-word}
-        .hero p{color:var(--muted); margin:0 0 18px}
-        .cta{display:inline-block; background: linear-gradient(135deg, var(--brand), var(--brand-2)); color:#0b1020; font-weight:700; padding:12px 18px; border-radius:14px; text-decoration:none; box-shadow: var(--shadow)}
-        .cta.ghost{background:transparent; color:var(--text); box-shadow:none; border:1px solid var(--border)}
-
-        .hero-card{
+        .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+        .card{
+            background:var(--panel);
             border:1px solid var(--border);
-            background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
-            border-radius: var(--radius-lg);
+            border-radius:var(--radius);
+            box-shadow:var(--shadow);
             overflow:hidden;
-            box-shadow: var(--shadow);
-            width:100%;
-            display:block;
-            justify-self:center;
+            display:flex;flex-direction:column;
+            cursor:pointer;
+            min-width:0; 
         }
-        .hero-card img{display:block; width:100%; height:320px; object-fit:cover; object-position:center}
+        .card img{width:100%;aspect-ratio:16/9;object-fit:cover}
+        .card-body{padding:14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+        .price{font-weight:700;color:var(--brand)}
 
-        .statbar{display:flex; gap:20px; padding:14px 16px; background:rgba(17,24,39,.6); border-top:1px solid var(--border); flex-wrap:wrap}
-        .pill{padding:6px 10px; border:1px solid var(--border); border-radius:999px; color:var(--muted)}
-
-        .section{padding: 60px 0}
-        .section h2{font-size: clamp(22px, 3vw, 34px); margin:0 0 8px}
-        .section p.lead{color:var(--muted); margin-top:0}
-
-        /* Inventory grid and consistent card images */
-        .grid{display:grid; gap:16px; grid-template-columns: repeat(12, 1fr)}
-        .card{grid-column: span 12; background: var(--card); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column;}
-        /* NEW: container that enforces same visible area for images */
-        .card-media{
-            width:100%;
-            aspect-ratio: 16 / 9; /* ensures consistent preview size */
-            overflow:hidden;
-            background: linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.01));
+        .tiers{
+            display:grid;
+            gap:16px;
+            grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+            align-items:start;
         }
-        .card-media img{
-            width:100%;
-            height:100%;
-            display:block;
-            object-fit:cover; /* cover the area, no stretching */
-            object-position:center;
-            border-radius: 10px 10px 0 0;
+        .tier{
+            background:var(--panel);
+            border:1px solid var(--border);
+            border-radius:var(--radius);
+            padding:18px;
+            min-width:0; 
+            box-sizing:border-box;
         }
-        .card-body{padding:14px; margin-top:auto}
-        .row{display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between}
-        .price{font-weight:700; background: linear-gradient(135deg, var(--brand), var(--accent)); -webkit-background-clip: text; background-clip:text; color:transparent}
-        .badge{font-size:12px; color:var(--muted); border:1px solid var(--border); padding:4px 8px; border-radius:999px}
-        .btn{display:inline-block; margin-top:8px; border:1px solid var(--border); padding:8px 12px; border-radius:10px; text-decoration:none; color:var(--text)}
-        .btn:hover{background:rgba(96,165,250,.12)}
+        .tier ul{margin:8px 0 0 1.1rem;padding:0}
+        .tier li{margin-bottom:6px}
 
-        @media (min-width: 860px){ .card{grid-column: span 4} }
+        .about{display:grid;gap:20px}
+        @media(min-width:900px){ .about{grid-template-columns:1.1fr .9fr} }
+        .about img{width:100%;height:260px;object-fit:cover;border-radius:var(--radius)}
 
-        .tiers{display:grid; gap:16px; grid-template-columns: repeat(12, 1fr)}
-        .tier{grid-column: span 12; background: var(--card); border:1px solid var(--border); border-radius: var(--radius); padding:16px}
-        .tier h3{margin: 0 0 6px}
-        .tier ul{margin:10px 0 0 18px}
-        @media (min-width: 860px){ .tier{grid-column: span 4} }
+        form{display:grid;gap:10px;max-width:680px}
+        input,textarea{
+            background:#0f162c;border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:10px;font:inherit
+        }
+        textarea{min-height:120px;resize:vertical}
+        button{
+            background:linear-gradient(135deg,var(--brand),var(--brand2));color:#0b1020;padding:12px 18px;border:none;border-radius:14px;font-weight:700;cursor:pointer
+        }
 
-        .about{display:grid; gap:20px; grid-template-columns: 1fr}
-        .about img{width:100%; height:260px; object-fit:cover; border-radius: var(--radius)}
-        @media (min-width: 900px){ .about{grid-template-columns: 1.1fr .9fr} }
+        footer{border-top:1px solid var(--border);padding:20px 0;color:var(--muted);text-align:center;margin-top:40px}
 
-        form{display:grid; gap:10px; grid-template-columns:1fr; max-width: 680px}
-        input, textarea{background:#0f162c; border:1px solid var(--border); color:var(--text); padding:10px 12px; border-radius:10px; font: inherit}
-        textarea{min-height:120px; resize:vertical}
-        .inline{display:flex; gap:10px}
-
-        .lightbox{position: fixed; inset:0; background: rgba(6,10,24,.7); display:none; align-items:center; justify-content:center; padding:20px; z-index:1000;}
-        .lightbox .panel{max-width:900px; width:min(94vw, 900px); background: var(--card); border:1px solid var(--border); border-radius: var(--radius-lg); overflow:hidden; box-shadow: var(--shadow)}
-        .lightbox img{width:100%; height: 340px; object-fit:cover}
+        .lightbox{position:fixed;inset:0;background:rgba(6,10,24,.7);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000}
+        .lightbox.active{display:flex}
+        .lightbox .panel{max-width:900px;width:min(94vw,900px);background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+        .lightbox img{width:100%;max-height:60vh;object-fit:contain}
         .lightbox .panel-body{padding:16px}
-        .close{position:absolute; top:18px; right:18px; background:rgba(255,255,255,.06); border:1px solid var(--border); color:var(--text); text-decoration:none; padding:6px 10px; border-radius:999px; z-index:1001;}
-        .lightbox:target{display:flex}
-
-        footer{border-top:1px solid var(--border); margin-top:40px; padding:20px 0; color:var(--muted)}
-
-        /* --- Flexible/responsive tweaks --- */
-        .grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-        .tiers { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-
-        @media (max-width: 860px) {
-            .hero-wrap { grid-template-columns: 1fr; align-items:start; }
-            .hero-card { grid-column: 1 / -1; justify-self:stretch; }
-            .hero-card img { width:100%; height:auto; max-height:320px; object-fit:cover; object-position:center; display:block; border-radius:12px; margin-top:18px; }
-            .hero h1{ font-size: clamp(24px, 7vw, 36px); }
-            .hero > div { text-align: left; }
-            .inline { gap:8px; }
-        }
-
-        @media (max-width: 640px) {
-            nav { display:none; }
-            header .nav { flex-wrap:wrap; justify-content:space-between; }
-            .inline { flex-direction:column; }
-        }
-
-        /* Desktop hero specifics */
-        @media (min-width: 861px) {
-            .hero-wrap { grid-template-columns: 1fr 1fr; align-items:center; }
-            .hero-card img { width:100%; height:100%; max-height:400px; object-fit:cover; border-radius:12px; }
-        }
-
-        /* Lightbox safety */
-        .lightbox img { max-height:60vh; object-fit:contain; }
+        .lightbox .close{position:absolute;top:18px;right:18px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text);text-decoration:none;padding:6px 10px;border-radius:999px;cursor:pointer}
     </style>
 </head>
 <body>
+
 <header>
-    <div class="nav container">
-        <a class="brand" href="#home" aria-label="Khan Detailing Home">
-            <span class="logo" aria-hidden="true"></span>
-            <span class="brand-name">Khan carshop</span>
-        </a>
+    <div class="container">
         <nav>
-            <a href="#inventory">Inventory</a>
-            <a href="#financing">Financing</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
+            <a href="#home" class="brand">Khan Carshop</a>
+            <ul>
+                <li><a href="#inventory">Inventory</a></li>
+                <li><a href="#financing">Financing</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="burger" id="burger" aria-label="menu" role="button" tabindex="0"><span></span><span></span><span></span></div>
         </nav>
     </div>
 </header>
 
-<main id="home" class="hero container">
-    <div class="hero-wrap">
-        <div>
-            <h1>Your Next Car Awaits.</h1>
-            <p>Discover carefully inspected vehicles with transparent pricing, flexible financing, and friendly service.</p>
-            <div style="display:flex; gap:10px; margin-top:16px;">
-                <a class="cta" href="#inventory">Browse Inventory</a>
-                <a class="cta ghost" href="#contact">Contact Sales</a>
+<main>
+    <section id="home">
+        <div class="container hero">
+            <div>
+                <h1>Your Next Car Awaits.</h1>
+                <p class="lead">Discover carefully inspected vehicles with transparent pricing and flexible financing.</p>
+                <div class="hero-actions">
+                    <a href="#inventory" class="primary">Browse Inventory</a>
+                    <a href="#contact" class="ghost">Contact Sales</a>
+                </div>
             </div>
-            <div class="statbar" style="margin-top:18px;">
-                <span class="pill">✔ 150+ point checks</span>
-                <span class="pill">🚗 Test drive today</span>
-                <span class="pill">🛡 12-month warranty</span>
-            </div>
+            <img src="https://r44performance.com/cdn/shop/articles/Modified-BMW-G90-M5_eace87d3-08b8-4d06-8c9c-c5d4960f5da7.jpg" alt="Showroom car">
         </div>
+    </section>
 
-        <div class="hero-card" aria-hidden="true">
-            <img src="https://r44performance.com/cdn/shop/articles/Modified-BMW-G90-M5_eace87d3-08b8-4d06-8c9c-c5d4960f5da7.jpg?v=1738920006&width=1500" alt="Showroom car" />
-            <div class="statbar">
-                <span>Featured: 2025 Sedan • AWD • 0 km</span>
+    <section id="inventory">
+        <div class="container">
+            <h2>Inventory</h2>
+            <p class="lead">Tap a car to view interior photo.</p>
+            <div class="grid">
+                <article class="card" data-lightbox="car1">
+                    <img src="https://www.motortrend.com/files/667c44018de3ad000891f1cd/001-2025-toyota-camry-se-front-quarter-static.jpg" alt="Toyota Camry">
+                    <div class="card-body">
+                        <strong>Toyota Camry 2025</strong>
+                        <span class="price">$30,500</span>
+                    </div>
+                </article>
+
+                <article class="card" data-lightbox="car2">
+                    <img src="https://www.shutterstock.com/image-photo/kharkiv-ukraine-july-2021-mercedesamg-600nw-2028640733.jpg" alt="Mercedes C63">
+                    <div class="card-body">
+                        <strong>Mercedes-Benz C63 AMG</strong>
+                        <span class="price">$27,150</span>
+                    </div>
+                </article>
+
+                <article class="card" data-lightbox="car3">
+                    <img src="https://wallpapers.com/images/hd/bmw-m6-1600-x-901-wallpaper-g19rszweqdl9hi0w.jpg" alt="BMW 6 Series">
+                    <div class="card-body">
+                        <strong>BMW 6 Series 2015</strong>
+                        <span class="price">$78,900</span>
+                    </div>
+                </article>
             </div>
         </div>
-    </div>
+    </section>
+
+    <section id="financing">
+        <div class="container">
+            <h2>Financing</h2>
+            <p class="lead">Flexible options for every budget.</p>
+            <div class="tiers">
+                <div class="tier">
+                    <h3>Smart Start</h3>
+                        <ul>
+                            <li>0–20% down</li>
+                            <li>Up to 36 months</li>
+                        </ul>
+                </div>
+
+                <div class="tier">
+                    <h3>Comfort Plan</h3>
+                    <ul>
+                        <li>10–30% down</li>
+                        <li>Up to 48 months</li>
+                    </ul>
+                </div>
+
+                <div class="tier">
+                    <h3>Premium Flex</h3>
+                    <ul>
+                        <li>Custom down</li>
+                        <li>Up to 60 months</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container about">
+            <img src="https://www.shutterstock.com/image-vector/vector-team-workers-carries-out-600nw-1467741446.jpg" alt="Team">
+            <div>
+                <h2>About Khan Detailing</h2>
+                <p class="lead">Customer-first dealership focused on trust and quality.</p>
+                <p>Since 2020, we’ve helped thousands of drivers find the right car at the right price. Every vehicle is inspected, detailed, and ready for your test drive.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <p class="lead">Send a message and we’ll get back to you.</p>
+            <form>
+                <input type="text" name="name" placeholder="Full name" required>
+                <input type="email" name="email" placeholder="Email address" required>
+                <input type="text" name="subject" placeholder="Subject">
+                <textarea name="message" placeholder="Your message"></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
 </main>
 
-<section id="inventory" class="section container">
-    <h2>Inventory</h2>
-    <p class="lead">Click a card for details.</p>
+<footer>©2025 Khan Carshop</footer>
 
-    <div class="grid">
-        <article class="card" id="car-camry">
-            <div class="card-media">
-                <a href="#car1" aria-label="Open Toyota Camry details">
-                    <img src="https://www.motortrend.com/files/667c44018de3ad000891f1cd/001-2025-toyota-camry-se-front-quarter-static.jpg" alt="Toyota Camry 80" />
-                </a>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <strong>Toyota Camry 2025</strong>
-                    <span class="price">$30,500</span>
-                </div>
-                <div class="row" style="gap:6px;">
-                    <span class="badge">2,000 km</span>
-                    <span class="badge">Automatic</span>
-                    <span class="badge">Gasoline</span>
-                </div>
-                <a class="btn" href="#car1">View details</a>
-            </div>
-        </article>
-
-        <article class="card" id="car-tucson">
-            <div class="card-media">
-                <a href="#car2" aria-label="Open Mercedes-Benz details">
-                    <img src="https://www.shutterstock.com/image-photo/kharkiv-ukraine-july-2021-mercedesamg-600nw-2028640733.jpg" alt="Mercedes-benz c63" />
-                </a>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <strong>Mercedes-Benz C63 AMG</strong>
-                    <span class="price">$27,150</span>
-                </div>
-                <div class="row" style="gap:6px;">
-                    <span class="badge">18,000 km</span>
-                    <span class="badge">AWD</span>
-                    <span class="badge">Automatic</span>
-                </div>
-                <a class="btn" href="#car2">View details</a>
-            </div>
-        </article>
-
-        <article class="card" id="car-bmw3">
-            <div class="card-media">
-                <a href="#car3" aria-label="Open BMW 6 Series details">
-                    <img src="https://wallpapers.com/images/hd/bmw-m6-1600-x-901-wallpaper-g19rszweqdl9hi0w.jpg" alt="BMW 6 Series" />
-                </a>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <strong>BMW 6 Series 2015</strong>
-                    <span class="price">$78,900</span>
-                </div>
-                <div class="row" style="gap:6px;">
-                    <span class="badge">30,000 km</span>
-                    <span class="badge">RWD</span>
-                    <span class="badge">Automatic</span>
-                </div>
-                <a class="btn" href="#car3">View details</a>
-            </div>
-        </article>
-    </div>
-</section>
-
-<section id="financing" class="section container">
-    <h2>Financing</h2>
-    <p class="lead">Flexible options for every budget. Get pre-qualified in minutes.</p>
-    <div class="tiers">
-        <div class="tier">
-            <h3>Smart Start</h3>
-            <p>Ideal for first-time buyers.</p>
-            <ul>
-                <li>0–20% down payment</li>
-                <li>Terms up to 36 months</li>
-                <li>Basic warranty included</li>
-            </ul>
-        </div>
-        <div class="tier">
-            <h3>Comfort Plan</h3>
-            <p>Balanced terms and payments.</p>
-            <ul>
-                <li>10–30% down payment</li>
-                <li>Terms up to 48 months</li>
-                <li>Extended service plan</li>
-            </ul>
-        </div>
-        <div class="tier">
-            <h3>Premium Flex</h3>
-            <p>Lowest monthly payments.</p>
-            <ul>
-                <li>Custom down payment</li>
-                <li>Terms up to 60 months</li>
-                <li>Premium protection</li>
-            </ul>
-        </div>
-    </div>
-</section>
-
-<section id="about" class="section container">
-    <h2>About Khan detailing</h2>
-    <p class="lead">We’re a customer-first dealership focused on trust, quality, and value.</p>
-    <div class="about">
-        <img src="https://www.shutterstock.com/image-vector/vector-team-workers-carries-out-600nw-1467741446.jpg" alt="Team at the dealership" />
-        <div>
-            <p>Since 2020, we’ve helped thousands of drivers find the right car at the right price. Every vehicle is inspected, detailed, and ready for your test drive.</p>
-            <p>We partner with reputable lenders to offer flexible financing. Our service team supports you long after you drive off the lot.</p>
-        </div>
-    </div>
-</section>
-
-<section id="contact" class="section container">
-    <h2>Contact Us</h2>
-    <p class="lead">Questions? Looking for a specific model? Send a message and we’ll get back to you.</p>
-    <form aria-label="Contact form (demo only)">
-        <div class="inline">
-            <input type="text" name="name" placeholder="Full name" required />
-            <input type="email" name="email" placeholder="Email address" required />
-        </div>
-        <input type="text" name="subject" placeholder="Subject" />
-        <textarea name="message" placeholder="Your message"></textarea>
-        <button class="cta" type="submit">Send Message</button>
-    </form>
-</section>
-
-<div id="car1" class="lightbox" aria-hidden="true">
-    <a class="close" href="#inventory" aria-label="Close">Close ✕</a>
+<div class="lightbox" id="car1">
     <div class="panel">
-        <img src="https://di-uploads-pod44.dealerinspire.com/nyetoyota/uploads/2024/01/2025_Toyota-Camry_XSE_006-copy-1.jpg" alt="Toyota Camry XV80" />
-        <div class="panel-body">
-            <h3>Toyota Camry 2025 • $30,500</h3>
-            <p>Reliable mid-size sedan with one owner and complete service history. Features Apple CarPlay, LED headlights, and adaptive cruise control.</p>
-        </div>
+        <a class="close" data-close aria-label="Close">✕</a>
+        <img src="https://di-uploads-pod44.dealerinspire.com/nyetoyota/uploads/2024/01/2025_Toyota-Camry_XSE_006-copy-1.jpg" alt="Toyota Camry interior">
+        <div class="panel-body"><h3>Toyota Camry 2025 Interior</h3></div>
+    </div>
+</div>
+<div class="lightbox" id="car2">
+    <div class="panel">
+        <a class="close" data-close aria-label="Close">✕</a>
+        <img src="https://media.carsandbids.com/cdn-cgi/image/width=800/d9b636c2ec84ddc3bc7f2eb32861b39bdd5f9683/photos/3OOZEPa3-RFKCAEUqA7-(edit).jpg" alt="Mercedes interior">
+        <div class="panel-body"><h3>Mercedes-Benz C63 Interior</h3></div>
+    </div>
+</div>
+<div class="lightbox" id="car3">
+    <div class="panel">
+        <a class="close" data-close aria-label="Close">✕</a>
+        <img src="https://i.pinimg.com/736x/64/6a/e8/646ae8a02e21bde3f2f066f6f4ca0430.jpg" alt="BMW interior">
+        <div class="panel-body"><h3>BMW 6 Series Interior</h3></div>
     </div>
 </div>
 
-<div id="car2" class="lightbox" aria-hidden="true">
-    <a class="close" href="#inventory" aria-label="Close">Close ✕</a>
-    <div class="panel">
-        <img src="https://media.carsandbids.com/cdn-cgi/image/width=542,quality=70/d9b636c2ec84ddc3bc7f2eb32861b39bdd5f9683/photos/3OOZEPa3-RFKCAEUqA7-(edit).jpg?t=172523338920" alt="Mercedes-Benz C63" />
-        <div class="panel-body">
-            <h3>Mercedes-Benz C63 AMG • $27,150</h3>
-            <p>Compact sedan in excellent condition. AWD, lane assist, and heated seats. Dealer-maintained, accident-free.</p>
-        </div>
-    </div>
-</div>
+<script>
+    const burger = document.getElementById('burger');
+    const navList = document.querySelector('nav ul');
+    burger?.addEventListener('click', ()=> navList.classList.toggle('open'));
+    burger?.addEventListener('keydown', e => { if(e.key==='Enter' || e.key===' ') navList.classList.toggle('open'); });
 
-<div id="car3" class="lightbox" aria-hidden="true">
-    <a class="close" href="#inventory" aria-label="Close">Close ✕</a>
-    <div class="panel">
-        <img src="https://i.pinimg.com/736x/64/6a/e8/646ae8a02e21bde3f2f066f6f4ca0430.jpg" alt="BMW 6 Series" />
-        <div class="panel-body">
-            <h3>BMW 6 Series 2015 • $78,900</h3>
-            <p>Sporty and comfortable daily driver with M Sport package, sunroof, and navigation. Meticulously kept, ready to enjoy.</p>
-        </div>
-    </div>
-</div>
+    document.querySelectorAll('.card[data-lightbox]').forEach(card=>{
+        card.addEventListener('click', ()=>{
+            const id = card.dataset.lightbox;
+            const el = document.getElementById(id);
+            if(el) el.classList.add('active');
+        });
+    });
+    document.querySelectorAll('[data-close]').forEach(btn=>{
+        btn.addEventListener('click', ()=> btn.closest('.lightbox')?.classList.remove('active'));
+    });
+    window.addEventListener('keydown', e=>{
+        if(e.key==='Escape') document.querySelectorAll('.lightbox.active').forEach(l=>l.classList.remove('active'));
+    });
+    document.querySelectorAll('.lightbox').forEach(lb=>{
+        lb.addEventListener('click', e=>{
+            if(e.target === lb) lb.classList.remove('active');
+        });
+    });
+</script>
 
-<footer>
-    <div class="container">
-        <div class="row" style="justify-content:space-between">
-            <span>©2025 Khan Detailing.</span>
-        </div>
-    </div>
-</footer>
 </body>
 </html>
